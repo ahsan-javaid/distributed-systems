@@ -33,3 +33,22 @@ pub fn thread_v1 () {
   println!("data: {:?}", data);
   rx.recv().unwrap();
 }
+
+pub fn mutex_v2() {
+  let lock = Arc::new(Mutex::new(0_u32));
+  let lock2 = Arc::clone(&lock);
+
+  let _ = thread::spawn(move || -> () {
+    let _guard = lock2.lock().unwrap();
+
+    panic!();
+  }).join();
+
+  let mut guard = match lock.lock() {
+    Ok(g) => g,
+    Err(p) => p.into_inner()
+  };
+
+  *guard += 1;
+
+}
