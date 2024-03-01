@@ -1,6 +1,7 @@
 # distributed-systems
 
 ### Programs
+* programs: *
 * P001: Share a string between two threads
 * p002: Mutex variations
 
